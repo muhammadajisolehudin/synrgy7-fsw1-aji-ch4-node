@@ -64,7 +64,7 @@ const people = [
 ]
 
 
-
+// const filePath = './result.txt';
 
 const saveData = () => {
     fs.writeFile('./people.txt', JSON.stringify(people), 'utf-8', (err) => {
@@ -74,7 +74,7 @@ const saveData = () => {
 }
 
 const getData =()=>{
-    fs.readFile(filePath, 'utf-8', (err, data) => {
+    fs.readFile('./people.txt', 'utf-8', (err, data) => {
         if (err) {
             console.error("Error reading file:", err);
         }
@@ -82,7 +82,6 @@ const getData =()=>{
     });
 }
 
-const filePath = './result.txt';
 
 function getDataById(filePath, id) {
     fs.readFile(filePath, 'utf-8', (err, data) => {
