@@ -66,19 +66,34 @@ const people = [
 
 // const filePath = './result.txt';
 
-const saveData = () => {
-    fs.writeFile('./people.txt', JSON.stringify(people), 'utf-8', (err) => {
+const saveData = (filePath) => {
+    fs.writeFile(filePath, JSON.stringify(people), 'utf-8', (err) => {
         if(err) console.log("error save")
         else console.log("suksess save")
     })
 }
 
-const getData =()=>{
-    fs.readFile('./people.txt', 'utf-8', (err, data) => {
+const getData =(filePath)=>{
+    fs.readFile(filePath, 'utf-8', (err, data) => {
         if (err) {
             console.error("Error reading file:", err);
         }
         console.log(JSON.parse(data))
+    });
+}
+
+function getNamesFromFile(filePath) {
+    fs.readFile(filePath, 'utf-8', (err, data) => {
+        if (err) {
+            console.error("Error reading file:", err);
+            return;
+        }
+        try {
+            const people = JSON.parse(data).map(person => person.name); 
+            console.log(people); 
+        } catch (parseError) {
+            console.error("Error parsing JSON:", parseError);
+        }
     });
 }
 
@@ -90,15 +105,15 @@ function getDataById(filePath, id) {
             return;
         }
 
-            const people = JSON.parse(data);
-            const person = people.find(p => p.id === id); // Mencari orang dengan id yang cocok
-            if (person) {
-                console.log(person);
-            } else {
-                console.log("No person found with id:", id);
-            }
+        const people = JSON.parse(data);
+        const person = people.find(p => p.id === id); // Mencari orang dengan id yang cocok
+        if (person) {
+            console.log(person);
+        } else {
+            console.log("No person found with id:", id);
+        }
         
     });
 }
 
-module.exports = { saveData, getData, getDataById };
+module.exports = { saveData, getData, getDataById, getNamesFromFile };

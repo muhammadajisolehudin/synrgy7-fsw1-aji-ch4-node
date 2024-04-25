@@ -1,7 +1,7 @@
 const { printData, volumeKubus, luasKubus, volumeBalok, luasBalok, volumeprisma, luasPrisma, saveAndResetData } =require('./dummy');
 
-const people = { saveData, getData, getDataById } = require('./people');
-printData();
+const people = { saveData, getData, getNamesFromFile, getDataById } = require('./people');
+// printData();
 
 // custom modul, luas dan volume 
 // kubus
@@ -34,9 +34,11 @@ const os=require('os')
 const fs=require('fs');
 
 
-saveData();
-getData();
+saveData('./people.txt');
+// getData('./people.txt');
+getNamesFromFile('./people.txt');
 getDataById('./people.txt', 1);
+
 
 
 
