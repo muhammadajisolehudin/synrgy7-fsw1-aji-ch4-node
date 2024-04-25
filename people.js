@@ -116,4 +116,41 @@ function getDataById(filePath, id) {
     });
 }
 
-module.exports = { saveData, getData, getDataById, getNamesFromFile };
+function createAndDisplayData(filePath, newData, callback) {
+    // Membaca file JSON saat ini
+    fs.readFile(filePath, 'utf-8', (err, data) => {
+        // if (err) {
+        //     console.error("Error reading file:", err);
+        //     callback(err);
+        //     return;
+        // }
+
+        // // Parsing data JSON
+        // let people;
+        // try {
+        //     people = JSON.parse(data);
+        // } catch (parseError) {
+        //     console.error("Error parsing JSON:", parseError);
+        //     callback(parseError);
+        //     return;
+        // }
+
+        // Menambahkan data baru ke array
+        people.push(newData);
+
+        // Menyimpan kembali data yang diperbarui ke file
+        fs.writeFile(filePath, JSON.stringify(people), 'utf-8', (writeErr) => {
+            if (writeErr) {
+                console.error("Error writing file:", writeErr);
+                callback(writeErr);
+                return;
+            }
+
+            // Jika tidak ada error, kembalikan data yang telah diperbarui
+            console.log("Updated data:", people);
+            callback(null, people);
+        });
+    });
+}
+
+module.exports = { saveData, getData, getDataById, getNamesFromFile, createAndDisplayData };
