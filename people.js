@@ -25,42 +25,6 @@ const people = [
     username: "Karianne",
     email: "Julianne.OConner@kory.org",
   },
-{
-    id: 5,
-    name: "Chelsey Dietrich",
-    username: "Kamren",
-    email: "Lucio_Hettinger@annie.ca",
-  },
-  {
-    id: 6,
-    name: "Mrs. Dennis Schulist",
-    username: "Leopoldo_Corkery",
-    email: "Karley_Dach@jasper.info",
-  },
-  {
-    id: 7,
-    name: "Kurtis Weissnat",
-    username: "Elwyn.Skiles",
-    email: "Telly.Hoeger@billy.biz",
-  },
-  {
-    id: 8,
-    name: "Nicholas Runolfsdottir V",
-    username: "Maxime_Nienow",
-    email: "Sherwood@rosamond.me",
-  },
-{
-    id: 9,
-    name: "Glenna Reichert",
-    username: "Delphine",
-    email: "Chaim_McDermott@dana.io",
-  },
-  {
-    id: 10,
-    name: "Clementina DuBuque",
-    username: "Moriah.Stanton",
-    email: "Rey.Padberg@karina.biz",
-  },
 ]
 
 
@@ -73,14 +37,29 @@ const saveData = (filePath) => {
     })
 }
 
-const getData =(filePath)=>{
+const getData = (filePath) => {
     fs.readFile(filePath, 'utf-8', (err, data) => {
         if (err) {
             console.error("Error reading file:", err);
+            return;
         }
-        console.log(JSON.parse(data))
+        try {
+            const jsonData = JSON.parse(data);
+            console.log(jsonData);
+        } catch (parseError) {
+            console.error("Error parsing JSON:", parseError);
+        }
     });
 }
+
+// const getData =(filePath)=>{
+//     fs.readFile(filePath, 'utf-8', (err, data) => {
+//         if (err) {
+//             console.error("Error reading file:", err);
+//         }
+//         console.log(JSON.parse(data))
+//     });
+// }
 
 function getNamesFromFile(filePath) {
     fs.readFile(filePath, 'utf-8', (err, data) => {
@@ -116,41 +95,21 @@ function getDataById(filePath, id) {
     });
 }
 
-function createAndDisplayData(filePath, newData, callback) {
-    // Membaca file JSON saat ini
+
+
+function createData(filePath, newData) {
     fs.readFile(filePath, 'utf-8', (err, data) => {
-        // if (err) {
-        //     console.error("Error reading file:", err);
-        //     callback(err);
-        //     return;
-        // }
-
-        // // Parsing data JSON
-        // let people;
-        // try {
-        //     people = JSON.parse(data);
-        // } catch (parseError) {
-        //     console.error("Error parsing JSON:", parseError);
-        //     callback(parseError);
-        //     return;
-        // }
-
-        // Menambahkan data baru ke array
+        // let people = [];
         people.push(newData);
-
-        // Menyimpan kembali data yang diperbarui ke file
-        fs.writeFile(filePath, JSON.stringify(people), 'utf-8', (writeErr) => {
+        fs.writeFile(filePath, JSON.stringify(people), 'utf-8', writeErr => {
             if (writeErr) {
-                console.error("Error writing file:", writeErr);
-                callback(writeErr);
-                return;
+                console.error("Error saving file:", writeErr);
+            } else {
+                console.log("Data successfully saved.");
+                console.log("Updated data:", people);
             }
-
-            // Jika tidak ada error, kembalikan data yang telah diperbarui
-            console.log("Updated data:", people);
-            callback(null, people);
         });
     });
 }
 
-module.exports = { saveData, getData, getDataById, getNamesFromFile, createAndDisplayData };
+module.exports = { saveData, getData, getDataById, getNamesFromFile, createData };

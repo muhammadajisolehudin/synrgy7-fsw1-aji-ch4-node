@@ -1,6 +1,6 @@
-const { printData, volumeKubus, luasKubus, volumeBalok, luasBalok, volumeprisma, luasPrisma, saveAndResetData } =require('./dummy');
+const { printData, volumeKubus, luasKubus, volumeBalok, luasBalok, volumeprisma, luasPrisma } =require('./dummy');
 
-const people = { saveData, getData, getNamesFromFile, getDataById, createAndDisplayData } = require('./people');
+const { saveData, getData, getNamesFromFile, getDataById, createData } = require('./people');
 // printData();
 
 // custom modul, luas dan volume 
@@ -39,15 +39,10 @@ getData('./people.txt');
 // getNamesFromFile('./people.txt');
 // getDataById('./people.txt', 1);
 
-const newData = { id: 11, name: "Alice Johnson", username: "alicej", email: "alice@example.com" };
-createAndDisplayData('./people.txt', newData, (err, updatedPeople) => {
-    if (err) {
-        console.log('Error processing file');
-        return;
-    }
-    console.log('Data after adding new entry:', updatedPeople);
-});
 
+const newData = { id: 8, name: "Carol Taylor", username: "carolt", email: "carol@example.com" };
+
+createData('./people.txt', newData);
 
 
 
