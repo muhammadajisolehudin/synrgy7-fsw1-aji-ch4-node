@@ -36,4 +36,6 @@ function luasPrisma(base, triangleHeight, prismHeight) {
 }
 
 
+
+
 module.exports = { printData, printDataCustom, volumeKubus, luasKubus, volumeBalok, luasBalok, volumeprisma, luasPrisma };
